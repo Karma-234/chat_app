@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1033660514515",
+    "project_id": "kml-chat-app",
+    "storage_bucket": "kml-chat-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033660514515:android:34f4c2914eb0cbc9e25426",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033660514515-rglla1ef850q2vasit3jmv2hm0u5t1u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7HHuYEB4ieAoNXN6dIznFCaoqJgt43GU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033660514515-rglla1ef850q2vasit3jmv2hm0u5t1u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
