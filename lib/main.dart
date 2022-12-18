@@ -1,9 +1,18 @@
 import 'package:chat_app/features/sign_up/view/signup_view1.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-void main() {
+import 'core/services/firebase_options/firebase_options.dart';
+import 'features/splash/splash_view.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ).timeout(const Duration(seconds: 30));
+
   runApp(const MyApp());
 }
 
@@ -19,8 +28,9 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) {
         return GetMaterialApp(
-          title: 'Kml Chat App',
-          home: SignUpView1(),
+          debugShowCheckedModeBanner: false,
+          title: 'Chat App',
+          home: const SplashView(),
           builder: (context, child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
             child: child!,
