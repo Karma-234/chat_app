@@ -1,4 +1,5 @@
 import 'package:chat_app/core/constants.dart';
+import 'package:chat_app/core/services/store_service.dart';
 import 'package:chat_app/features/dashboard/controller/dashboard_ctrl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -9,75 +10,20 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ChatView extends StatefulWidget {
+class ChatView extends StatelessWidget {
   ChatView({super.key});
 
-  @override
-  State<ChatView> createState() => _ChatViewState();
-}
-
-class _ChatViewState extends State<ChatView> {
   var ctrl = Get.put(DashCtrl());
 
   final TextEditingController ctrl2 = TextEditingController();
 
   var chatServuce =
       FirebaseFirestore.instance.collection(Constants.firebaseConvoCollection);
+
   var usersrv =
       FirebaseFirestore.instance.collection(Constants.firebaseUsersCollection);
 
-  RxString? doc;
-
-  void getData() async {
-    await chatServuce
-        .doc('${ctrl.email.value}'
-            '_'
-            '${ctrl.friendMail.value}')
-        .get()
-        .then((value) async {
-      if (value.exists) {
-        setState(() {
-          doc?.value = '${ctrl.email.value}'
-              '_'
-              '${ctrl.friendMail.value}';
-        });
-      } else {
-        chatServuce
-            .doc('${ctrl.friendMail.value}'
-                '_'
-                '${ctrl.email.value}')
-            .get()
-            .then((value) async {
-          if (value.exists) {
-            setState(() {
-              doc?.value = '${ctrl.friendMail.value}'
-                  '_'
-                  '${ctrl.email.value}';
-            });
-          } else {
-            await chatServuce
-                .doc('${ctrl.email.value}'
-                    '_'
-                    '${ctrl.friendMail.value}')
-                .set({'messages': []}).then((value) {
-              setState(() {
-                doc?.value = '${ctrl.email.value}'
-                    '_'
-                    '${ctrl.friendMail.value}';
-              });
-            });
-          }
-        });
-      }
-    });
-    chatServuce;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
+  final storeService = StoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +80,7 @@ class _ChatViewState extends State<ChatView> {
                                     output['messages'][index]['message']
                                         .toString(),
                                     style: GoogleFonts.inder(
-                                        fontSize: 18.0.sp, color: Colors.white),
+                                        fontSize: 14.0.sp, color: Colors.white),
                                   ),
                                 ),
                               ],
@@ -161,89 +107,16 @@ class _ChatViewState extends State<ChatView> {
                       onChanged: (value) {
                         ctrl.setmessg(value);
                       },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0.r)),
                       ),
                     ),
                   ),
                   Gap(6.0.w),
                   IconButton(
                     onPressed: () async {
-                      await chatServuce
-                          .doc('${ctrl.email.value}'
-                              '_'
-                              '${ctrl.friendMail.value}')
-                          .get()
-                          .then((check1) async {
-                        if (!check1.exists) {
-                          await chatServuce
-                              .doc('${ctrl.friendMail.value}'
-                                  '_'
-                                  '${ctrl.email.value}')
-                              .get()
-                              .then((check2) async {
-                            if (check2.exists) {
-                              await chatServuce
-                                  .doc('${ctrl.friendMail.value}'
-                                      '_'
-                                      '${ctrl.email.value}')
-                                  .update({
-                                'messages': FieldValue.arrayUnion([
-                                  {
-                                    'message': ctrl.message.value,
-                                    'sender': ctrl.email.value,
-                                    'time': DateTime.now().toUtc(),
-                                  }
-                                ])
-                              });
-                            } else {
-                              await chatServuce
-                                  .doc('${ctrl.email.value}'
-                                      '_'
-                                      '${ctrl.friendMail.value}')
-                                  .set({'messages': []}).then((value) async {
-                                await chatServuce
-                                    .doc('${ctrl.email.value}'
-                                        '_'
-                                        '${ctrl.friendMail.value}')
-                                    .update({
-                                  'messages': FieldValue.arrayUnion([
-                                    {
-                                      'message': ctrl.message.value,
-                                      'sender': ctrl.email.value,
-                                      'time': DateTime.now().toUtc(),
-                                    }
-                                  ])
-                                });
-                              });
-                            }
-                          });
-                        } else {
-                          await chatServuce
-                              .doc('${ctrl.email.value}'
-                                  '_'
-                                  '${ctrl.friendMail.value}')
-                              .update({
-                            'messages': FieldValue.arrayUnion([
-                              {
-                                'message': ctrl.message.value,
-                                'sender': ctrl.email.value,
-                                'time': DateTime.now().toUtc(),
-                              }
-                            ])
-                          });
-                        }
-                      }).then((value) async {
-                        ctrl2.clear();
-                        getData();
-                        await usersrv.doc(ctrl.email.value).update({
-                          'chats':
-                              FieldValue.arrayUnion([ctrl.friendMail.value])
-                        });
-                        await usersrv.doc(ctrl.friendMail.value).update({
-                          'chats': FieldValue.arrayUnion([ctrl.email.value])
-                        });
-                      });
+                      await storeService.sendMsg(ctrl, ctrl2);
                     },
                     icon: const Icon(
                       Icons.send,

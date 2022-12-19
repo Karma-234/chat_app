@@ -21,8 +21,8 @@ class AppInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.0.h),
+    return SizedBox(
+      height: 20.0.h,
       child: TextFormField(
         controller: ctrl,
         autovalidateMode: AutovalidateMode.onUserInteraction,

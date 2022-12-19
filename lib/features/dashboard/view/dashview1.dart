@@ -21,21 +21,15 @@ var userDetails = [].obs;
 class DashView1 extends StatelessWidget {
   DashView1({super.key});
 
-  final user2 = Get.put(UserModel(), permanent: true);
   final TextEditingController ctrl = TextEditingController();
-  final message = Get.put(MessageModel(), permanent: true);
-  String error = 'User does not exist';
   final chatRef =
       FirebaseFirestore.instance.collection(Constants.firebaseConvoCollection);
 
   final service = FirebaseAuthService();
-  final details = Get.put(LoginPayload(), permanent: true);
 
   final dash = Get.put(DashCtrl(), permanent: true);
   final ctrl2 = Get.put(SignUpCtrl(), permanent: true);
   // final service = AuthServiceImpl();
-
-  var allUser = [].obs;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +83,7 @@ class DashView1 extends StatelessWidget {
             return Center(
               child: Text(
                 'You have no chats.',
-                style: GoogleFonts.inter(color: Colors.black, fontSize: 20.sp),
+                style: GoogleFonts.inter(color: Colors.black, fontSize: 14.sp),
               ),
             );
           }
