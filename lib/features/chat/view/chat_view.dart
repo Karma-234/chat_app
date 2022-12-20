@@ -10,6 +10,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../app_widgets/input_field/message_field.dart';
+
 class ChatView extends StatelessWidget {
   ChatView({super.key});
 
@@ -98,33 +100,8 @@ class ChatView extends StatelessWidget {
             Gap(10.0.h),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: ctrl2,
-                      onChanged: (value) {
-                        ctrl.setmessg(value);
-                      },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0.r)),
-                      ),
-                    ),
-                  ),
-                  Gap(6.0.w),
-                  IconButton(
-                    onPressed: () async {
-                      await storeService.sendMsg(ctrl, ctrl2);
-                    },
-                    icon: const Icon(
-                      Icons.send,
-                      color: Colors.blue,
-                    ),
-                  )
-                ],
-              ),
+              child: MessageField(
+                  ctrl2: ctrl2, ctrl: ctrl, storeService: storeService),
             ),
             Gap(20.0.h),
           ],

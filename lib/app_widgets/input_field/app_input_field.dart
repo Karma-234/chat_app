@@ -21,47 +21,44 @@ class AppInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 20.0.h,
-      child: TextFormField(
-        controller: ctrl,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: validator,
-        onChanged: changed,
-        onFieldSubmitted: onSaved,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(13.0.r),
-            borderSide: const BorderSide(
-              color: Colors.transparent,
-            ),
+    return TextFormField(
+      controller: ctrl,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: validator,
+      onChanged: changed,
+      onFieldSubmitted: onSaved,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.0.r),
+          borderSide: const BorderSide(
+            color: Colors.transparent,
           ),
-          enabled: true,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(13.0.r),
-            borderSide: const BorderSide(
-              color: Colors.transparent,
-            ),
+        ),
+        enabled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.0.r),
+          borderSide: const BorderSide(
+            color: Colors.transparent,
           ),
-          filled: true,
-          fillColor: Colors.white,
-          label: Text(
-            labelText,
-            style: GoogleFonts.inter(
-              fontSize: 14.0,
-              height: 20 / 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        label: Text(
+          labelText,
+          style: GoogleFonts.inter(
+            fontSize: 14.0,
+            height: 20 / 14,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
           ),
-          counter: Text(
-            counterText,
-            style: GoogleFonts.inter(
-              fontSize: 14.0,
-              height: 20 / 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
+        ),
+        counter: Text(
+          counterText,
+          style: GoogleFonts.inter(
+            fontSize: 14.0,
+            height: 20 / 14,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
           ),
         ),
       ),
