@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1033660514515",
+    "firebase_url": "https://kml-chat-app-default-rtdb.firebaseio.com",
     "project_id": "kml-chat-app",
     "storage_bucket": "kml-chat-app.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "1033660514515-rglla1ef850q2vasit3jmv2hm0u5t1u1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1033660514515-l796gklnnt3ps25viuumnfl6n3u1hta7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatApp"
+              }
             }
           ]
         }

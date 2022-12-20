@@ -1,0 +1,34 @@
+->Create DB
+
+->Establish Connection to DB
+
+->Signup
+--->Take (firstname, lastname, email, password)
+--->Make email our identity (primary key)
+--->Check if incoming identity (inputted email) exist on the users or auth table
+------->if identity exists, return error
+--->Create user on auth table if identity does not exist
+-------> if user creation is successful, create other info aside password on Users table
+--->Auto login user and redirect to dashboard
+
+->Login
+---> Take email and password
+---> Call firebase to validate email and password
+------->If firebase returns true
+-----------> Fetch user biodata from Users table using identity (email) as pivot
+-----------> Store info on Local storage
+-----------> Redirect to dashboard
+------->If firebase returns false
+-----------> display error message back to user
+
+-->Dashboard
+--->If user is logged in, display chatlist.
+---->If chat list is empty, handle error.
+------> Display chatlist,onclick chat, go to chat page with Current User and selected chat.
+-------> If message body is null, handle error else show received text and sent text.
+
+-->Add user
+---->Create search bar 
+----->Check input against email database. 
+------>If user exist, onclick open chat with user and add user to chatlist.
+-------->update state.
