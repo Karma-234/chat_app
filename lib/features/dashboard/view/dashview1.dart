@@ -125,6 +125,7 @@ class DashView1 extends StatelessWidget {
                                 dash.setDoc('${dash.email.value}'
                                     '_'
                                     '${dash.friendMail.value}');
+                                Get.to(ChatView());
                               } else {
                                 await createConvo
                                     .doc('${dash.friendMail.value}'
@@ -145,10 +146,10 @@ class DashView1 extends StatelessWidget {
                                       dash.setDoc('${dash.email.value}'
                                           '_'
                                           '${dash.friendMail.value}');
+                                      Get.to(ChatView());
                                     });
                                   }
                                 });
-                                Get.to(ChatView());
                               }
                             });
                           },
