@@ -7,11 +7,15 @@ import 'package:get/get.dart';
 import 'core/services/firebase_options/firebase_options.dart';
 import 'features/splash/splash_view.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).timeout(const Duration(seconds: 30));
+  await FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FirebaseMessaging.instance.getToken();
 
   runApp(const MyApp());

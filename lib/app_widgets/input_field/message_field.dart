@@ -1,12 +1,16 @@
+import 'package:chat_app/core/constants.dart';
+import 'package:chat_app/core/services/message_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/instance_manager.dart';
 
 import '../../core/services/store_service.dart';
 import '../../features/dashboard/controller/dashboard_ctrl.dart';
 
 class MessageField extends StatelessWidget {
-  const MessageField({
+  MessageField({
     Key? key,
     required this.ctrl2,
     required this.ctrl,
@@ -16,6 +20,7 @@ class MessageField extends StatelessWidget {
   final TextEditingController ctrl2;
   final DashCtrl ctrl;
   final StoreService storeService;
+  final msgService = Get.put(MessageService());
 
   @override
   Widget build(BuildContext context) {

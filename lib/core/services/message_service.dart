@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:chat_app/core/constants.dart';
 import 'package:chat_app/features/dashboard/controller/dashboard_ctrl.dart';
 import 'package:chat_app/features/login/view/loginview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/instance_manager.dart';
@@ -125,5 +128,39 @@ class MessageService {
         payload: messsage.data['body'],
       );
     });
+  }
+
+  void senPushMsg(String token, String body, String title) async {
+    try {
+      await post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAA8Kr3wNM:APA91bG7lfaOGKHM0o6nN-aXk1rqpCtptQdWdmf3kScEzJddH964uaQxRsNCu-cjSywAheVDTD349gqtLYDqAyr8PnjyArJTy-fC6JYPnoNpYXpQKbo8K-MuUQhXkJLKwTFnfl2Gr0ft'
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'body': body,
+              'title': title
+            },
+            "notification": <String, dynamic>{
+              "title": title,
+              "body": body,
+              "android_channel_id": "dbfood"
+            },
+            "to": token
+          },
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
   }
 }
