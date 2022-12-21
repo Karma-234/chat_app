@@ -47,10 +47,25 @@ class MessageService {
 
   loginSaveToken(DashCtrl dashCtrl) async {
     await FirebaseFirestore.instance
-        .collection(Constants.firebaseTokenCollection)
+        .collection(Constants.firebaseUsersCollection)
         .doc(dashCtrl.email.value)
-        .update(
-      {'token': dashCtrl.token.value},
-    );
+        .get()
+        .then((value) async {
+      if (value.exists) {
+        await FirebaseFirestore.instance
+            .collection(Constants.firebaseTokenCollection)
+            .doc(dashCtrl.email.value)
+            .update(
+          {'token': dashCtrl.token.value},
+        );
+      } else {
+        await FirebaseFirestore.instance
+            .collection(Constants.firebaseTokenCollection)
+            .doc(dashCtrl.email.value)
+            .set(
+          {'token': dashCtrl.token.value},
+        );
+      }
+    });
   }
 }
