@@ -47,7 +47,7 @@ class MessageService {
 
   loginSaveToken(DashCtrl dashCtrl) async {
     await FirebaseFirestore.instance
-        .collection(Constants.firebaseUsersCollection)
+        .collection(Constants.firebaseTokenCollection)
         .doc(dashCtrl.email.value)
         .get()
         .then((value) async {
