@@ -17,12 +17,17 @@ class DashCtrl extends GetxController {
   RxString firstName = ''.obs;
   RxString lastName = ''.obs;
   RxString doc = ''.obs;
+  RxString token = ''.obs;
   List chats = [].obs;
   final appService = FirebaseAuthService();
   var payload = ChatPayload().obs;
 
   setmail(String mail) {
     email.value = mail;
+  }
+
+  setToken(String tkn) {
+    token.value = tkn;
   }
 
   setmessg(String msg) {

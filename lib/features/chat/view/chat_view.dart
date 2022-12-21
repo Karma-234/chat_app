@@ -1,4 +1,5 @@
 import 'package:chat_app/core/constants.dart';
+import 'package:chat_app/core/services/message_service.dart';
 import 'package:chat_app/core/services/store_service.dart';
 import 'package:chat_app/features/dashboard/controller/dashboard_ctrl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,9 +13,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../app_widgets/input_field/message_field.dart';
 
-class ChatView extends StatelessWidget {
+class ChatView extends StatefulWidget {
   ChatView({super.key});
 
+  @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
   var ctrl = Get.put(DashCtrl());
 
   final TextEditingController ctrl2 = TextEditingController();
@@ -26,6 +32,13 @@ class ChatView extends StatelessWidget {
       FirebaseFirestore.instance.collection(Constants.firebaseUsersCollection);
 
   final storeService = StoreService();
+  final msgService = MessageService();
+
+  @override
+  void initState() {
+    super.initState();
+    msgService.requestPermission();
+  }
 
   @override
   Widget build(BuildContext context) {
