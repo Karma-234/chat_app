@@ -1,3 +1,4 @@
+import 'package:chat_app/core/services/message_service.dart';
 import 'package:chat_app/features/dashboard/controller/dashboard_ctrl.dart';
 import 'package:chat_app/features/dashboard/view/dashview1.dart';
 import 'package:chat_app/features/login/controller/login_ctrl.dart';
@@ -18,6 +19,7 @@ class LoginView extends StatelessWidget {
   LoginView({super.key});
   final ctrl = Get.put(Login(), permanent: true);
   final ctrl2 = Get.put(DashCtrl(), permanent: true);
+  final msgService = Get.put(MessageService());
 
   @override
   Widget build(BuildContext context) {
@@ -80,13 +82,16 @@ class LoginView extends StatelessWidget {
                                     ctrl2.chats.add(user.data()['chats']);
                                   }
                                 });
+                                msgService.loginSaveToken(ctrl2);
                               }
                               Loader.hide();
+
                               Get.offAll(
                                 () => DashView1(),
                               );
                             } catch (e) {
                               Loader.hide();
+
                               debugPrint(e.toString());
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

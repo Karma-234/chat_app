@@ -1,4 +1,5 @@
 import 'package:chat_app/core/constants.dart';
+import 'package:chat_app/core/services/message_service.dart';
 import 'package:chat_app/features/dashboard/controller/dashboard_ctrl.dart';
 import 'package:chat_app/features/dashboard/view/dashview1.dart';
 import 'package:chat_app/features/login/view/loginview.dart';
@@ -23,7 +24,7 @@ class SignUpView1 extends StatelessWidget {
   final GlobalKey<FormState> form = GlobalKey();
   final ctrl = Get.put(SignUpCtrl(), permanent: true);
   final ctrl2 = Get.put(DashCtrl(), permanent: true);
-
+  final msgService = Get.put(MessageService());
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -126,8 +127,11 @@ class SignUpView1 extends StatelessWidget {
                                         ctrl2.chats.add(user.data()['chats']);
                                       }
                                     });
+
+                                    msgService.signUpsaveToken(ctrl2);
                                   }
                                   Loader.hide();
+
                                   Get.offAll(
                                     () => DashView1(),
                                   );
