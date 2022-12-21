@@ -43,6 +43,8 @@ class _DashView1State extends State<DashView1> {
   @override
   void initState() {
     super.initState();
+    msgService.requestPermission();
+    msgService.getToken(dash);
     msgService.initInfo();
   }
 
@@ -114,7 +116,7 @@ class _DashView1State extends State<DashView1> {
                   fontSize: 30.sp,
                 ),
               ),
-              Gap(23.0.h),
+              GetPlatform.isAndroid ? Gap(20.0.h) : Gap(0.0.h),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 22.0),
