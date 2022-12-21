@@ -16,20 +16,35 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../core/services/message_service.dart';
+
 var userDetails = [].obs;
 
-class DashView1 extends StatelessWidget {
+class DashView1 extends StatefulWidget {
   DashView1({super.key});
 
+  @override
+  State<DashView1> createState() => _DashView1State();
+}
+
+class _DashView1State extends State<DashView1> {
   final TextEditingController ctrl = TextEditingController();
+
   final chatRef =
       FirebaseFirestore.instance.collection(Constants.firebaseConvoCollection);
 
   final service = FirebaseAuthService();
 
   final dash = Get.put(DashCtrl(), permanent: true);
+
   final ctrl2 = Get.put(SignUpCtrl(), permanent: true);
-  // final service = AuthServiceImpl();
+
+  final msgService = Get.put(MessageService());
+  @override
+  void initState() {
+    super.initState();
+    msgService.initInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
