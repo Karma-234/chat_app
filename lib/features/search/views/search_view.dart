@@ -108,7 +108,6 @@ class SearchView extends StatelessWidget {
             onTap: () async {
               ctrl.sefriend(users[i]['email']);
 
-              Get.to(ChatView());
               await createConvo
                   .doc('${ctrl.email.value}' '_' '${ctrl.friendMail.value}')
                   .get()
@@ -116,6 +115,7 @@ class SearchView extends StatelessWidget {
                 if (value1.exists) {
                   ctrl.setDoc(
                       '${ctrl.email.value}' '_' '${ctrl.friendMail.value}');
+                  Get.to(ChatView());
                 } else {
                   await createConvo
                       .doc('${ctrl.friendMail.value}' '_' '${ctrl.email.value}')
@@ -124,6 +124,7 @@ class SearchView extends StatelessWidget {
                     if (value2.exists) {
                       ctrl.setDoc(
                           '${ctrl.friendMail.value}' '_' '${ctrl.email.value}');
+                      Get.to(ChatView());
                     } else {
                       await createConvo
                           .doc('${ctrl.email.value}'
