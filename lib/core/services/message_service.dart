@@ -72,5 +72,58 @@ class MessageService {
     });
   }
 
-  initInfo() {}
+  initInfo() {
+    var androidInit =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iosInit = DarwinInitializationSettings(
+      onDidReceiveLocalNotification: (id, title, body, payload) {},
+    );
+
+    var initialSettings =
+        InitializationSettings(android: androidInit, iOS: iosInit);
+
+    FlutterLocalNotificationsPlugin().initialize(
+      initialSettings,
+      onDidReceiveNotificationResponse: (details) {
+        if (details.notificationResponseType ==
+            NotificationResponseType.selectedNotification) {
+          try {
+            try {
+              if (details.payload != null && details.payload!.isNotEmpty) {}
+            } catch (e) {}
+          } catch (e) {}
+        }
+      },
+    );
+    FirebaseMessaging.onMessage.listen((messsage) async {
+      BigTextStyleInformation textStyleInformation = BigTextStyleInformation(
+        messsage.notification!.body.toString(),
+        htmlFormatBigText: true,
+        htmlFormatContent: true,
+        contentTitle: messsage.notification!.title.toString(),
+      );
+      AndroidNotificationDetails androidNotiDetails =
+          AndroidNotificationDetails(
+        'dbfood',
+        'dbfood',
+        priority: Priority.max,
+        playSound: true,
+        importance: Importance.high,
+        styleInformation: textStyleInformation,
+      );
+      DarwinNotificationDetails iosNotiDetails =
+          const DarwinNotificationDetails();
+      NotificationDetails platformSpec = NotificationDetails(
+        android: androidNotiDetails,
+        iOS: iosNotiDetails,
+      );
+      await FlutterLocalNotificationsPlugin().show(
+        0,
+        messsage.notification?.title,
+        messsage.notification?.body,
+        platformSpec,
+        payload: messsage.data['body'],
+      );
+    });
+  }
 }
