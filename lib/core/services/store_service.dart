@@ -52,13 +52,19 @@ class StoreService {
                 }
               ])
             });
-            var snap = await FirebaseFirestore.instance
+            await FirebaseFirestore.instance
                 .collection(Constants.firebaseTokenCollection)
                 .doc(ctrl.friendMail.value)
-                .get();
-            var token = snap['token'];
-            msgService.senPushMsg(token, ctrl.message.value, ctrl.email.value);
-            ctrl2.clear();
+                .get()
+                .then((value) async {
+              if (value.exists) {
+                var token = value['token'];
+                msgService.senPushMsg(
+                    token, ctrl.message.value, ctrl.email.value);
+                ctrl2.clear();
+              }
+              ctrl2.clear();
+            });
           } else {
             await FirebaseFirestore.instance
                 .collection(Constants.firebaseConvoCollection)
@@ -80,14 +86,19 @@ class StoreService {
                   }
                 ])
               });
-              var snap = await FirebaseFirestore.instance
+              await FirebaseFirestore.instance
                   .collection(Constants.firebaseTokenCollection)
                   .doc(ctrl.friendMail.value)
-                  .get();
-              var token = snap['token'];
-              msgService.senPushMsg(
-                  token, ctrl.message.value, ctrl.email.value);
-              ctrl2.clear();
+                  .get()
+                  .then((value) async {
+                if (value.exists) {
+                  var token = value['token'];
+                  msgService.senPushMsg(
+                      token, ctrl.message.value, ctrl.email.value);
+                  ctrl2.clear();
+                }
+                ctrl2.clear();
+              });
             });
           }
         });
@@ -106,13 +117,18 @@ class StoreService {
             }
           ])
         });
-        var snap = await FirebaseFirestore.instance
+        await FirebaseFirestore.instance
             .collection(Constants.firebaseTokenCollection)
             .doc(ctrl.friendMail.value)
-            .get();
-        var token = snap['token'];
-        msgService.senPushMsg(token, ctrl.message.value, ctrl.email.value);
-        ctrl2.clear();
+            .get()
+            .then((value) async {
+          if (value.exists) {
+            var token = value['token'];
+            msgService.senPushMsg(token, ctrl.message.value, ctrl.email.value);
+            ctrl2.clear();
+          }
+          ctrl2.clear();
+        });
       }
     }).then((value) async {
       await FirebaseFirestore.instance
