@@ -44,7 +44,25 @@ class _ChatViewState extends State<ChatView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(ctrl.friendMail.value),
+        title: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection(Constants.firebaseUsersCollection)
+              .doc(ctrl.friendMail.value)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var onm = snapshot.data!;
+              return Row(
+                children: [
+                  Text('${onm['firstname'].toString().capitalizeFirst}'),
+                  Gap(10.0.w),
+                  Text('${onm['lastname'].toString().capitalizeFirst}')
+                ],
+              );
+            }
+            return Text(ctrl.friendMail.value);
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
